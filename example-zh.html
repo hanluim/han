@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档目录表示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #fff;
+            padding: 10px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        h1 { background-color: #59BDB9; }
+        h2 { background-color: #4CAF50; }
+        h3 { background-color: #2196F3; }
+        h4 { background-color: #FF9800; }
+        h5 { background-color: #E91E63; }
+        h6 { background-color: #9C27B0; }
+
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            height: 80px;
+            line-height: 80px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            text-align: center;
+        }
+        #navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        #navbar a:hover {
+            text-decoration: underline;
+        }
+
+        #toc-container {
+            position: fixed;
+            top: 90px; /* Adjusted to account for navbar height */
+            right: 20px;
+            width: 25%;
+            max-width: 200px;
+            padding: 10px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        #toc-container h4 {
+            margin-top: 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        #toc-container a {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        #toc-container a:hover {
+            color: #007BFF;
+        }
+        #toc-container a.custom-toc-style-1 {
+            font-weight: bold;
+        }
+        #toc-container a.custom-toc-style-2 {
+            margin-left: 10px;
+        }
+        #toc-container a.custom-toc-style-3 {
+            margin-left: 20px;
+        }
+        #toc-container a.custom-active {
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        #article-container {
+            width: 70%;
+            margin-top: 90px; /* Adjusted to account for navbar and toc height */
+            margin-right: 20px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        #article-container p {
+            background-color: #f5f5f5;
+            min-height: 400px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+
+        #dynamic-content-button {
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #59BDB9;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #dynamic-content-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div id="navbar">
+    文档目录表示例
+</div>
+
+<div id="toc-container">
+    <h4>目录</h4>
+</div>
+
+<div id="article-container">
+    <h1 id="introduction">介绍</h1>
+    <p>这是关于某个主题的详细介绍。</p>
+
+    <h2 id="background">背景</h2>
+    <p>这里是一些背景信息。</p>
+
+    <h2 id="objectives">目标</h2>
+    <p>这里是我们的目标。</p>
+
+    <h3>子目标一</h3>
+    <p>子目标一的详细描述。</p>
+
+    <h3>子目标二</h3>
+    <p>子目标二的详细描述。</p>
+
+    <h2 id="methods">方法</h2>
+    <p>我们采用的方法。</p>
+
+    <h3>步骤一</h3>
+    <p>第一步的详细描述。</p>
+
+    <h3>步骤二</h3>
+    <p>第二步的详细描述。</p>
+
+    <h2 id="conclusion">结论</h2>
+    <p>总结和未来工作。</p>
+</div>
+
+<button id="dynamic-content-button">加载更多内容</button>
+
+<script src="han.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        new HanluTableOfContents('#article-container', '#toc-container', {
+            headingTags: ['H1', 'H2', 'H3'],
+            offsetScroll: 80,
+            linkClassPrefix: 'custom-toc-style-',
+            activeClass: 'custom-active',
+            idPrefix: 'custom-id-'
+        });
+
+        const dynamicContentButton = document.getElementById('dynamic-content-button');
+        dynamicContentButton.addEventListener('click', () => {
+            const articleContainer = document.getElementById('article-container');
+            const newContent = `
+                <h2 id="new-section">新章节</h2>
+                <p>这是动态加载的新章节的内容。</p>
+                <h3>新子目标</h3>
+                <p>这是新章节中的子目标。</p>
+            `;
+            articleContainer.insertAdjacentHTML('beforeend', newContent);
+        });
+    });
+</script>
+
+</body>
+</html>
